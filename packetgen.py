@@ -2,6 +2,9 @@ import os
 import sys
 import docx2txt 
 import re
+import random
+import docx
+from docx import Document
 
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
@@ -29,12 +32,12 @@ ce_bonus=[]
 misc_bonus=[]
 trash_bonus=[]
 
-cat_list=["SCI", "HIST", "GEO", "LIT", "FA", "RMPSS", "GEO", "CE", "MISC."]
+cat_list=["SCI", "HIST", "LIT", "FA", "RMPSS", "GEO", "CE", "MISC.", "TRASH"]
 
-distribution={ #define the number of tossups in each category of the packet here
-    "SCI":4,
-    "HIST":4,
-    "LIT":4,
+dist={ #define the number of tossups in each category of the packet here
+    "SCI":3,
+    "HIST":3,
+    "LIT":3,
     "FA":3,
     "RMPSS":3,
     "GEO":1,
@@ -43,9 +46,9 @@ distribution={ #define the number of tossups in each category of the packet here
     "TRASH":1
 }
 
-bonus:distribution={ #define the number of bonuses in each category of the packet here
-    "SCI":7,
-    "HIST":5,
+bonus_dist={ #define the number of bonuses in each category of the packet here
+    "SCI":5,
+    "HIST":2,
     "LIT":4,
     "FA":1,
     "RMPSS":1,
@@ -98,6 +101,12 @@ def getBonusList(category): #returns associated bonus list given tag
     else:
         return []
 
+def getCategory(question): #returns category name given the question test
+    category=re.findall(r"<[^<\,]*\,", question)
+    if(len(category)==0):
+        return ""
+    return (category[0][1:-1])
+
 #tossup_dict={"SCI":sci, "HIST":hist, "LIT":lit, "FA":fa, "RMPSS":rmpss, "GEO":geo, "CE":ce, "MISC.":misc, "TRASH":trash}
 #bonus_dict={"SCI":sci_bonus, "HIST":hist_bonus, "LIT":lit_bonus, "FA":fa_bonus, "RMPSS":rmpss_bonus, "GEO":geo_bonus, "CE":ce_bonus, "MISC.":misc_bonus, "TRASH":trash_bonus}
 
@@ -129,4 +138,45 @@ for i in range(len(files)):
 #print("Literature: ", lit)
 #print("Geography: ", geo)
 
-#for str in cat_list:
+
+signal=1
+packetnum=1
+while signal!=0:
+    packetList=[]
+    packetBonuses=[]
+    for cat in cat_list: #checks whether there are enough questions from each category to make a packet
+        if(len(getTossupList(cat))<dist[cat]):
+            signal=0
+        if(len(getBonusList(cat))<bonus_dist[cat]):
+            signal=0
+    if(signal==1):
+        for cat in cat_list:
+            for x in range(dist[cat]):
+                question_num=random.randint(0, len(getTossupList(cat))-1)
+                packetList.append(((getTossupList(cat))[question_num]))
+                getTossupList(cat).pop(question_num)
+            for y in range(bonus_dist[cat]):
+                question_num=random.randint(0, len(getBonusList(cat))-1)
+                packetBonuses.append(((getBonusList(cat))[question_num]))
+                getBonusList(cat).pop(question_num)
+        random.shuffle(packetList)
+        random.shuffle(packetBonuses)
+        #print("Tossups", packetList)
+        #print("Bonuses", packetBonuses)
+        doc=docx.Document()
+        header="QQBC Packet "+str(packetnum)
+        doc.add_heading(header, 0)
+        for i in range(min(len(packetList), len(packetBonuses))):
+            tossup_text=""+str(i+1)+". "+packetList[i]
+            tossup_para=doc.add_paragraph(tossup_text)
+            bonus_text=packetBonuses[i]
+            bonus_para=doc.add_paragraph(bonus_text)
+            path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+            doc.save(path)
+
+
+    packetnum=packetnum+1
+            
+    
+
+    

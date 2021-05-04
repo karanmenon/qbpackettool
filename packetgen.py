@@ -159,16 +159,43 @@ while signal!=0:
                 question_num=random.randint(0, len(getBonusList(cat))-1)
                 packetBonuses.append(((getBonusList(cat))[question_num]))
                 getBonusList(cat).pop(question_num)
-        random.shuffle(packetList)
-        random.shuffle(packetBonuses)
+        val=0
+        count=0
+        while(val!=1):
+            val=1
+            random.shuffle(packetList)
+            for x in range(1, len(packetList)): 
+                if(getCategory(packetList[x])==getCategory(packetList[x-1])):
+                    val=0
+                    break
+            count=count+1
+            if(count==100):
+                break
+        val=0
+        count=0
+        while(val!=1):
+            val=1
+            random.shuffle(packetBonuses)
+            for x in range(1, len(packetBonuses)): 
+                if(getCategory(packetBonuses[x])==getCategory(packetBonuses[x-1])):
+                    val=0
+                    break
+            count=count+1
+            if(count==100):
+                break
+                
         #print("Tossups", packetList)
         #print("Bonuses", packetBonuses)
         doc=docx.Document()
         header="QQBC Packet "+str(packetnum)
         doc.add_heading(header, 0)
         for i in range(min(len(packetList), len(packetBonuses))):
-            tossup_text=""+str(i+1)+". "+packetList[i]
+            tossup_text=""+str(i+1)
             tossup_para=doc.add_paragraph(tossup_text)
+            parts=packetList[i].split("(*)")
+            tossup_para.add_run(". ")
+            tossup_para.add_run(parts[0]+"(*)").bold = True
+            tossup_para.add_run(parts[1])
             bonus_text=packetBonuses[i]
             bonus_para=doc.add_paragraph(bonus_text)
             path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'

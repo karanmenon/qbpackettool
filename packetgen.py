@@ -5,11 +5,12 @@ import re
 import random
 import docx
 from docx import Document
+from docx.shared import Pt
 
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
 '''
-folder_addr="/Users/karanmenon/qbpackettool/packets" #put the address of your folder with packets here
+folder_addr="/Users/kritikaravichander/qbpackettool/packets" #put the address of your folder with packets here
 files=[]
 sci=[]
 hist=[]
@@ -116,23 +117,31 @@ for i in range(len(files)):
     file_addr=folder_addr+"/"+files[i]
     #print(len(files))
     text=docx2txt.process(file_addr)
+    print(file_addr)
     texts=text.split("Bonuses")
+    #print(texts)
     #text="1. dasdsklkdlsamds <HIST, WORLD> Bonus: Guyana <GEO, SA> 2. Kritika <SCI, CHEM> Bonus: Simping <RMPSS, PHIL>"
     all_tossups=re.findall(r"\d\.[^>]*>", texts[0])
     for x in range(len(all_tossups)):
         all_tossups[x]=all_tossups[x][3:]
-    all_bonuses=re.findall(r"Bonus:[^>]*>", texts[1])
+    all_bonuses=re.findall(r"\d\.[^>]*>", texts[1])
     #print("Tossups: ", all_tossups[0] , "\n")
     #print("Bonuses: ", all_bonuses[0])
     for j in range(len(all_tossups)):
+       # print(all_tossups[j])
+        category=[]
         category=re.findall(r"<[^<\,]*\,", all_tossups[j])
         for x in range(len(category)):
             category[x]=category[x][1:-1]
+            #print(category[x])
         (getTossupList(category[0])).append(all_tossups[j])
     for k in range(len(all_bonuses)):
         category=re.findall(r"<[^<\,]*\," , all_bonuses[k])
         for x in range(len(category)):
-            category[x]=category[x][1:-1]   
+            category[x]=category[x][1:-1]
+            #print(category[x]) 
+        #print(category[0])
+        #print("hello")  
         (getBonusList(category[0])).append(all_bonuses[k])
 #print("Literature: ", lit)
 #print("Geography: ", geo)
@@ -188,6 +197,11 @@ while signal!=0:
         doc=docx.Document()
         header="QQBC Packet "+str(packetnum)
         doc.add_heading(header, 0)
+        style=doc.styles['Normal']
+        font=style.font
+        font.name='Arial'
+        font.size=Pt(10)
+
         for i in range(min(len(packetList), len(packetBonuses))):
             tossup_text=""+str(i+1)
             tossup_para=doc.add_paragraph(tossup_text)
@@ -197,7 +211,7 @@ while signal!=0:
             tossup_para.add_run(parts[1])
             bonus_text=packetBonuses[i]
             bonus_para=doc.add_paragraph(bonus_text)
-            path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+            path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
             doc.save(path)
 
 

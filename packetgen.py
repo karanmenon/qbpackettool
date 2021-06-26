@@ -10,7 +10,7 @@ from docx.shared import Pt
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
 '''
-folder_addr="/Users/kritikaravichander/qbpackettool/packets2" #put the address of your folder with packets here
+folder_addr="/Users/kritikaravichander/qbpackettool/packets" #put the address of your folder with packets here
 files=[]
 sci=[]
 hist=[]
@@ -34,9 +34,19 @@ trash_bonus=[]
 
 cat_list=["SCI", "HIST", "LIT", "FA", "RMPSS", "GEO", "CE", "MISC.", "TRASH"]
 
+#scop distro is
+#5/5 Science (including 1/1 Noncomputational Math)
+#4/4 Literature
+#4/4 History
+#2/2 Religion and Mythology
+#2/2 Fine Arts
+#1/1 Geography
+#1/1 Philosophy, and Social Science
+#1/1 trash (sports, pop cult)
+
 dist={ #define the number of tossups in each category of the packet here
-    "SCI":4,
-    "HIST":5,
+    "SCI":5,
+    "HIST":4,
     "LIT":4,
     "FA":1,
     "RMPSS":1,
@@ -211,7 +221,7 @@ while signal!=0:
             tossup_para.add_run(parts[1])
             bonus_text=packetBonuses[i]
             bonus_para=doc.add_paragraph(bonus_text)
-            path='/Users/kritikaravichander/qbpackettool/generated_packets2/'+'QQBC_Packet'+str(packetnum)+'.docx'
+            path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
             doc.save(path)
 
     packetnum=packetnum+1
@@ -271,7 +281,7 @@ while len(packetList)>=20 and len(packetBonuses)>=20:
         tossup_para.add_run(parts[1])
         bonus_text=packetBonuses[i]
         bonus_para=doc.add_paragraph(bonus_text)
-        path='/Users/kritikaravichander/qbpackettool/generated_packets2/'+'QQBC_Packet'+str(packetnum)+'.docx'
+        path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
         doc.save(path)
     for i in range(20):
         packetList.remove(packetList[19-i])

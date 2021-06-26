@@ -66,7 +66,7 @@ def getTossupList(category): #returns associated question list given tag
         return lit
     elif(category=="FA"):
         return fa
-    elif(category=="RMPSS"):
+    elif(category=="RMPSS"):    
         return rmpss
     elif(category=="GEO"):
         return geo

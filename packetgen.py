@@ -52,7 +52,7 @@ bonus_dist={ #define the number of bonuses in each category of the packet here
     "LIT":4,
     "FA":1,
     "RMPSS":1,
-    "GEO":1,
+    "GEO":2,
     "CE":1,
     "MISC.":1,
     "TRASH":1

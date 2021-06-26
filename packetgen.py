@@ -52,7 +52,7 @@ bonus_dist={ #define the number of bonuses in each category of the packet here
     "LIT":4,
     "FA":1,
     "RMPSS":1,
-    "GEO":1,
+    "GEO":2,
     "CE":1,
     "MISC.":1,
     "TRASH":1
@@ -172,7 +172,7 @@ while signal!=0:
         while(val!=1):
             val=1
             random.shuffle(packetList)
-            for x in range(0, len(packetList)): 
+            for x in range(1, len(packetList)): 
                 if(getCategory(packetList[x])==getCategory(packetList[x-1])):
                     val=0
                     break
@@ -184,7 +184,7 @@ while signal!=0:
         while(val!=1):
             val=1
             random.shuffle(packetBonuses)
-            for x in range(0, len(packetBonuses)): 
+            for x in range(1, len(packetBonuses)): 
                 if(getCategory(packetBonuses[x])==getCategory(packetBonuses[x-1])):
                     val=0
                     break

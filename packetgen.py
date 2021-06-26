@@ -35,14 +35,14 @@ trash_bonus=[]
 cat_list=["SCI", "HIST", "LIT", "FA", "RMPSS", "GEO", "CE", "MISC.", "TRASH"]
 
 dist={ #define the number of tossups in each category of the packet here
-    "SCI":5,
+    "SCI":4,
     "HIST":5,
     "LIT":4,
     "FA":1,
     "RMPSS":1,
     "GEO":1,
     "CE":2,
-    "MISC.":0,
+    "MISC.":1,
     "TRASH":1
 }
 

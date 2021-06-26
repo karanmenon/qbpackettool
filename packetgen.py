@@ -253,7 +253,7 @@ while(val!=1):
         break
 print(len(packetList))
 print(len(packetBonuses))
-while len(packetList)>=24 and len(packetBonuses)>=24:
+while len(packetList)>=20 and len(packetBonuses)>=20:
     doc=docx.Document()
     header="QQBC Packet "+str(packetnum)
     doc.add_heading(header, 0)
@@ -262,7 +262,7 @@ while len(packetList)>=24 and len(packetBonuses)>=24:
     font.name='Arial'
     font.size=Pt(10)
 
-    for i in range(24):
+    for i in range(20):
         tossup_text=""+str(i+1)
         tossup_para=doc.add_paragraph(tossup_text)
         parts=packetList[i].split("(*)")
@@ -273,9 +273,9 @@ while len(packetList)>=24 and len(packetBonuses)>=24:
         bonus_para=doc.add_paragraph(bonus_text)
         path='/Users/kritikaravichander/qbpackettool/generated_packets2/'+'QQBC_Packet'+str(packetnum)+'.docx'
         doc.save(path)
-    for i in range(24):
-        packetList.remove(packetList[23-i])
-        packetBonuses.remove(packetBonuses[23-i])
+    for i in range(20):
+        packetList.remove(packetList[19-i])
+        packetBonuses.remove(packetBonuses[19-i])
 
     packetnum=packetnum+1
 

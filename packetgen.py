@@ -10,7 +10,7 @@ from docx.shared import Pt
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
 '''
-folder_addr="/Users/kritikaravichander/qbpackettool/packets" #put the address of your folder with packets here
+folder_addr="/Users/karanmenon/qbpackettool/packets" #put the address of your folder with packets here
 files=[]
 sci=[]
 hist=[]
@@ -120,14 +120,14 @@ def getCategory(question): #returns category name given the question test
 #tossup_dict={"SCI":sci, "HIST":hist, "LIT":lit, "FA":fa, "RMPSS":rmpss, "GEO":geo, "CE":ce, "MISC.":misc, "TRASH":trash}
 #bonus_dict={"SCI":sci_bonus, "HIST":hist_bonus, "LIT":lit_bonus, "FA":fa_bonus, "RMPSS":rmpss_bonus, "GEO":geo_bonus, "CE":ce_bonus, "MISC.":misc_bonus, "TRASH":trash_bonus}
 
-for file in os.listdir(folder_addr):
-    if file.endswith('.docx'):
-        files.append(file)
+for fi in os.listdir(folder_addr):
+    if fi.endswith('.docx'):
+        files.append(fi)
 for i in range(len(files)): 
-    file_addr=folder_addr+"/"+files[i]
+    fi_addr=folder_addr+"/"+files[i]
     #print(len(files))
-    text=docx2txt.process(file_addr)
-    print(file_addr)
+    text=docx2txt.process(fi_addr)
+    print(fi_addr)
     texts=text.split("Bonuses")
     #print(texts)
     #text="1. dasdsklkdlsamds <HIST, WORLD> Bonus: Guyana <GEO, SA> 2. Kritika <SCI, CHEM> Bonus: Simping <RMPSS, PHIL>"
@@ -221,7 +221,7 @@ while signal!=0:
             tossup_para.add_run(parts[1])
             bonus_text=packetBonuses[i]
             bonus_para=doc.add_paragraph(bonus_text)
-            path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+            path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
             doc.save(path)
 
     packetnum=packetnum+1
@@ -275,13 +275,14 @@ while len(packetList)>=20 and len(packetBonuses)>=20:
     for i in range(20):
         tossup_text=""+str(i+1)
         tossup_para=doc.add_paragraph(tossup_text)
+        print(i)
         parts=packetList[i].split("(*)")
         tossup_para.add_run(". ")
         tossup_para.add_run(parts[0]+"(*)").bold = True
         tossup_para.add_run(parts[1])
         bonus_text=packetBonuses[i]
         bonus_para=doc.add_paragraph(bonus_text)
-        path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+        path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
         doc.save(path)
     for i in range(20):
         packetList.remove(packetList[19-i])

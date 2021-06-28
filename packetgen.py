@@ -10,6 +10,8 @@ from docx.shared import Pt
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
 '''
+
+#hi
 folder_addr="/Users/karanmenon/qbpackettool/packets" #put the address of your folder with packets here
 files=[]
 sci=[]

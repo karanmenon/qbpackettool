@@ -32,7 +32,7 @@ ce_bonus=[]
 misc_bonus=[]
 trash_bonus=[]
 
-cat_list=["SCI", "HIST", "LIT", "FA", "RMPSS", "GEO", "CE", "MISC.", "TRASH"]
+cat_list=["SCI", "HIST", "LIT", "FA", "RMPSS", "GEO", "TRASH"]
 
 #scop distro is
 #5/5 Science (including 1/1 Noncomputational Math)
@@ -48,23 +48,23 @@ dist={ #define the number of tossups in each category of the packet here
     "SCI":5,
     "HIST":4,
     "LIT":4,
-    "FA":1,
-    "RMPSS":1,
+    "FA":2,
+    "RMPSS":3,
     "GEO":1,
-    "CE":2,
-    "MISC.":1,
+    "CE":0,
+    "MISC.":0,
     "TRASH":1
 }
 
 bonus_dist={ #define the number of bonuses in each category of the packet here
-    "SCI":4,
-    "HIST":5,
+    "SCI":5,
+    "HIST":4,
     "LIT":4,
-    "FA":1,
-    "RMPSS":1,
-    "GEO":2,
-    "CE":1,
-    "MISC.":1,
+    "FA":2,
+    "RMPSS":3,
+    "GEO":1,
+    "CE":0,
+    "MISC.":0,
     "TRASH":1
 }
 
@@ -131,30 +131,32 @@ for i in range(len(files)):
     texts=text.split("Bonuses")
     #print(texts)
     #text="1. dasdsklkdlsamds <HIST, WORLD> Bonus: Guyana <GEO, SA> 2. Kritika <SCI, CHEM> Bonus: Simping <RMPSS, PHIL>"
-    all_tossups=re.findall(r"\d\.[^>]*>", texts[0])
+    all_tossups=re.findall(r">[^>]*>", texts[0])
+    all_tossups.append(re.findall(r":[^>]*>", texts[0])[0])
     for x in range(len(all_tossups)):
         all_tossups[x]=all_tossups[x][3:]
-    all_bonuses=re.findall(r"\d\.[^>]*>", texts[1])
+    all_bonuses=re.findall(r">[^>]*>", texts[1])
+    all_bonuses.append(re.findall(r":[^>]*>", texts[1])[0])
+
+    for x in range(len(all_bonuses)):
+        all_bonuses[x]=all_bonuses[x][1:]
+        
     #print("Tossups: ", all_tossups[0] , "\n")
     #print("Bonuses: ", all_bonuses[0])
     for j in range(len(all_tossups)):
        # print(all_tossups[j])
-        category=[]
-        category=re.findall(r"<[^<\,]*\,", all_tossups[j])
-        for x in range(len(category)):
-            category[x]=category[x][1:-1]
+        category=getCategory(all_tossups[j])
             #print(category[x])
-        (getTossupList(category[0])).append(all_tossups[j])
+        (getTossupList(category)).append(all_tossups[j])
     for k in range(len(all_bonuses)):
-        category=re.findall(r"<[^<\,]*\," , all_bonuses[k])
-        for x in range(len(category)):
-            category[x]=category[x][1:-1]
+        category=getCategory(all_bonuses[k])
             #print(category[x]) 
         #print(category[0])
         #print("hello")  
-        (getBonusList(category[0])).append(all_bonuses[k])
+        (getBonusList(category)).append(all_bonuses[k])
 #print("Literature: ", lit)
 #print("Geography: ", geo)
+
 
 
 signal=1

@@ -10,7 +10,7 @@ from docx.shared import Pt
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
 '''
-folder_addr="/Users/kritikaravichander/qbpackettool/packets" #put the address of your folder with packets here
+folder_addr="/Users/karanmenon/qbpackettool/packets" #put the address of your folder with packets here
 files=[]
 sci=[]
 hist=[]
@@ -127,7 +127,6 @@ for i in range(len(files)):
     fi_addr=folder_addr+"/"+files[i]
     #print(len(files))
     text=docx2txt.process(fi_addr)
-    print(fi_addr)
     texts=text.split("Bonuses")
     #print(texts)
     #text="1. dasdsklkdlsamds <HIST, WORLD> Bonus: Guyana <GEO, SA> 2. Kritika <SCI, CHEM> Bonus: Simping <RMPSS, PHIL>"
@@ -154,10 +153,17 @@ for i in range(len(files)):
         #print(category[0])
         #print("hello")  
         (getBonusList(category)).append(all_bonuses[k])
+
+    if(files[i]=='SCOP 5 Tossups_Bonuses.docx'):
+        for n in all_tossups:
+            print(n)
 #print("Literature: ", lit)
 #print("Geography: ", geo)
 
-
+x=0
+for cat in cat_list:
+    x=x+len(getTossupList(cat))
+print("total qs: ", x)
 
 signal=1
 packetnum=1
@@ -165,8 +171,8 @@ while signal!=0:
     packetList=[]
     packetBonuses=[]
     for cat in cat_list: #checks whether there are enough questions from each category to make a packet
-        print(cat)
-        print(len(getTossupList(cat)))
+        #print(cat)
+        #print(len(getTossupList(cat)))
         if(len(getTossupList(cat))<dist[cat]):
             signal=0
         if(len(getBonusList(cat))<bonus_dist[cat]):
@@ -225,7 +231,7 @@ while signal!=0:
             tossup_para.add_run(parts[1])
             bonus_text=packetBonuses[i]
             bonus_para=doc.add_paragraph(bonus_text)
-            path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+            path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
             doc.save(path)
 
     packetnum=packetnum+1
@@ -264,8 +270,7 @@ while(val!=1):
     count=count+1
     if(count==100):
         break
-print(len(packetList))
-print(len(packetBonuses))
+
 while len(packetList)>=20 and len(packetBonuses)>=20:
     doc=docx.Document()
     header="QQBC Packet "+str(packetnum)
@@ -278,14 +283,13 @@ while len(packetList)>=20 and len(packetBonuses)>=20:
     for i in range(20):
         tossup_text=""+str(i+1)
         tossup_para=doc.add_paragraph(tossup_text)
-        print(i)
         parts=packetList[i].split("(*)")
         tossup_para.add_run(". ")
         tossup_para.add_run(parts[0]+"(*)").bold = True
         tossup_para.add_run(parts[1])
         bonus_text=packetBonuses[i]
         bonus_para=doc.add_paragraph(bonus_text)
-        path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+        path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
         doc.save(path)
     for i in range(20):
         packetList.remove(packetList[19-i])

@@ -140,7 +140,7 @@ for i in range(len(files)):
 
     for x in range(len(all_bonuses)):
         all_bonuses[x]=all_bonuses[x][1:]
-        
+
     #print("Tossups: ", all_tossups[0] , "\n")
     #print("Bonuses: ", all_bonuses[0])
     for j in range(len(all_tossups)):
@@ -165,6 +165,8 @@ while signal!=0:
     packetList=[]
     packetBonuses=[]
     for cat in cat_list: #checks whether there are enough questions from each category to make a packet
+        print(cat)
+        print(len(getTossupList(cat)))
         if(len(getTossupList(cat))<dist[cat]):
             signal=0
         if(len(getBonusList(cat))<bonus_dist[cat]):
@@ -227,8 +229,7 @@ while signal!=0:
             doc.save(path)
 
     packetnum=packetnum+1
-packetnum=packetnum-1
-print(packetnum-1, " packets completed")
+print(packetnum-2, " packets completed")
 
 
 #extra packets

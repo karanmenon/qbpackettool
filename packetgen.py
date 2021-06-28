@@ -10,7 +10,7 @@ from docx.shared import Pt
 '''this library is necessary, you must pip install docx2txt #
 in your command line so that we can read word documents
 '''
-folder_addr="/Users/karanmenon/qbpackettool/packets" #put the address of your folder with packets here
+folder_addr="/Users/kritikaravichander/qbpackettool/packets" #put the address of your folder with packets here
 files=[]
 sci=[]
 hist=[]
@@ -225,7 +225,7 @@ while signal!=0:
             tossup_para.add_run(parts[1])
             bonus_text=packetBonuses[i]
             bonus_para=doc.add_paragraph(bonus_text)
-            path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+            path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
             doc.save(path)
 
     packetnum=packetnum+1
@@ -285,7 +285,7 @@ while len(packetList)>=20 and len(packetBonuses)>=20:
         tossup_para.add_run(parts[1])
         bonus_text=packetBonuses[i]
         bonus_para=doc.add_paragraph(bonus_text)
-        path='/Users/karanmenon/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
+        path='/Users/kritikaravichander/qbpackettool/generated_packets/'+'QQBC_Packet'+str(packetnum)+'.docx'
         doc.save(path)
     for i in range(20):
         packetList.remove(packetList[19-i])
